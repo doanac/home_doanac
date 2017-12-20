@@ -1,0 +1,127 @@
+" shortcut configured:
+" folding:
+"   zc - folds
+"   zo - unfolds
+
+set nocompatible
+filetype plugin on
+au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 nu!
+au FileType javascript setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 nu!
+au FileType html setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
+au FileType gitcommit set tw=72 spell colorcolumn=72
+au BufNewFile,BufRead .stgit-edit.txt set tw=72 spell colorcolumn=72
+au BufNewFile,BufRead .stgit-new.txt set tw=72 spell colorcolumn=72
+
+" for arch
+syntax on
+
+call pathogen#infect()
+
+"set default theme:
+if has("gui_running")
+	":color darkblue
+	:color evening-doanac
+	source $VIMRUNTIME/mswin.vim
+	:set guifont=Ubuntu\ Mono\ 12
+else
+	:set paste
+	:color koehler
+endif
+
+source ~/.vim/osc52.vim
+vmap Y y:call SendViaOSC52(getreg('"'))<cr>
+
+if exists('+colorcolumn')
+	map <F8> :set colorcolumn=80<CR>
+else
+	map <F8> :match ErrorMsg '\%>80v.\+'<CR>
+endif
+
+" launch a shell with Ctrl-Shift-n
+nmap <C-S-n> :!xfce4-terminal --geometry=80x40&<CR><CR>
+
+" switch tabs
+map t :tabnext <CR>
+map T :tabprevious <CR>
+
+" reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" disable folds by default
+set nofoldenable
+
+let g:completor_completion_delay = 800
+
+"auto indentation
+set ai
+
+"always show status line
+"set laststatus=2
+
+" show relative line numbers
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+    set nonumber
+  else
+    set number
+    set relativenumber
+  endif
+endfunc
+map N :call NumberToggle()<cr>
+set number
+set relativenumber
+
+if $VMAIL_VIM != 'gvim'
+	"trim trailing whitespace
+	autocmd BufWritePre * :%s/\s\+$//e
+endif
+
+" tag bar customizations
+let g:tagbar_left = 1
+map <Tab> :TagbarToggle<CR>
+
+"opens the definition in a new tab
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+"opens the definition in split tab
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+let g:ale_open_list = 1
+call ale#Set('list_window_size', 4)
+
+"CScope mappings:
+if has("cscope")
+	" add any cscope database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+	" else add the database pointed to by environment variable
+	elseif $CSCOPE_DB != ""
+		cs add $CSCOPE_DB
+	endif
+
+	" show msg when any other cscope db added
+	set cscopeverbose
+
+	nmap <C-@>s :scs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>g :scs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>c :scs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>t :scs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>e :scs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-@>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-@>d :scs find d <C-R>=expand("<cword>")<CR><CR>
+
+	" open in another tab
+	nmap <C-@><C-@>s :tab scs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@><C-@>g :tab scs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@><C-@>c :tab scs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@><C-@>t :tab scs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@><C-@>e :tab scs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@><C-@>f :tab scs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-@><C-@>i :tab scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-@><C-@>d :tab scs find d <C-R>=expand("<cword>")<CR><CR>
+
+	"set timeout for key combo:
+	set timeoutlen=4000
+endif

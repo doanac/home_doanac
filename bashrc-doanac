@@ -1,0 +1,52 @@
+# increase the defaults for history
+HISTSIZE=3000
+HISTFILESIZE=4000
+
+alias storage="ssh -XC 192.168.0.120"
+alias reckless="ssh -A -XC reckless"
+
+#aliases for using a single gvim instance
+function gvim-s ()
+{
+	if [ $# -eq 0 ] ; then
+		gvim
+	else
+		gvim --remote-tab-silent $*
+	fi
+}
+alias gvim="gvim-s"
+#aliases for using a single console instance
+function vim-s ()
+{
+	if [ $# -eq 0 ] ; then
+		vim --servername DOANAC-LAP
+	else
+		vim --servername DOANAC-LAP --remote-tab-silent $*
+	fi
+}
+
+alias ssh-forget="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
+alias vi=vim
+
+# k8s stuff
+function jobserv-shell ()
+{
+	pod=$(kubectl --context $1 --namespace jobserv get pods  | grep jobserv | head -n1 | cut -d\  -f1)
+	echo == conecting to $pod ...
+	kubectl --context $1 --namespace jobserv exec -it $pod /bin/sh
+}
+alias jobserv-og="jobserv-shell osf-prod"
+
+function k8s-tail ()
+{
+	pod=$(kubectl --context $1 --namespace $2 get pods  | grep $3 | head -n1 | cut -d\  -f1)
+	echo == conecting to $pod ...
+	kubectl --context $1 --namespace $2 logs -f $pod
+}
+alias jobserv-tail-gitpoller='k8s-tail osf-prod jobserv git-poller'
+alias jobserv-tail-lavareaper='k8s-tail osf-prod jobserv lava-reaper'
+alias jobserv-tail-workermonitor='k8s-tail osf-prod jobserv worker'
+alias analyticz-tail='k8s-tail osf-prod data analyticz'
+
+alias jobserv-curl="curl -H \"OSF-TOKEN: $(cat $HOME/.osf-token)\" $*"
