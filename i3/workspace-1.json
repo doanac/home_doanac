@@ -1,0 +1,73 @@
+// vim:ts=4:sw=4:et
+{
+    // tabbed split container with 1 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": 0.60,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1041,
+               "width": 1047,
+               "x": 0,
+               "y": 0
+            },
+            "name": "i3: Layout saving in i3 - Mozilla Firefox",
+            "percent": 1,
+            "swallows": [
+               {
+                 "class": "^Firefox$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // tabbed split container with 3 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "percent": 0.40,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "name": "doanac@xps:~",
+            "percent": 0.5,
+            "swallows": [
+               {
+                 "class": "^Terminator$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1041,
+               "width": 838,
+               "x": 0,
+               "y": 0
+            },
+            "name": "Inbox - Mozilla Thunderbird",
+            "percent": 0.5,
+            "swallows": [
+               {
+                 "class": "^Thunderbird$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}

@@ -150,6 +150,13 @@ for_window [window_role="Msgcompose"] floating enable, border normal
 # for integration with "pass": http://jasonwryan.com/blog/2014/08/02/password/
 bindsym $mod+p exec /home/doanac/.config/i3/passmenu
 
+# volume control
+exec --no-startup-id /usr/bin/volnoti
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 2%+ && volnoti-show $(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)"
+ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer set Master 2%- && volnoti-show $(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1)"
+ bindsym XF86AudioMute exec --no-startup-id "amixer set Master toggle && if amixer get Master | grep -Fq '[off]'; then volnoti-show -m; else volnoti-show $(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1); fi"
+bindsym $mod+Shift+s exec --no-startup-id pavucontrol
+
 bindsym XF86Sleep exec /home/doanac/.config/i3/sleep.sh
 bindsym XF86PowerOff exec /home/doanac/.config/i3/sleep.sh
 # allow toggling displays via "f8" key
