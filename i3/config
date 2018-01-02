@@ -158,7 +158,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer set Master 2%+ && voln
 bindsym $mod+Shift+s exec --no-startup-id pavucontrol
 
 bindsym XF86Sleep exec /home/doanac/.config/i3/sleep.sh
-bindsym XF86PowerOff exec /home/doanac/.config/i3/sleep.sh
+bindsym $mod+F10 exec /home/doanac/.config/i3/sleep.sh
+
 # allow toggling displays via "f8" key
 #bindsym Control+F8 exec disper -C
 # allow real fn-f8 on laptop

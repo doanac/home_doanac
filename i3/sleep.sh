@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sudo pm-suspend
+sudo systemctl suspend
