@@ -1,3 +1,5 @@
+HashKnownHosts no
+
 Host reckless-remote
     ProxyCommand ssh doanac.kicks-ass.net nc -q0 reckless %p
     ForwardAgent yes
@@ -13,19 +15,10 @@ Host r2-a24
     ProxyCommand ssh aus-colo.linaro.org nc -q0 r2-a24 %p
     ForwardAgent yes
 
-Host ltd-ci-worker-01
-    User andy.doan
-    Hostname 136.243.137.215
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
-
-Host ltd-ci-worker-02
-    User andy.doan
-    Hostname 88.99.215.162
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
-
 Host raspberrypi3
     User osf
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
+
+Host og-worker*.foundries.io
+    User doanac
