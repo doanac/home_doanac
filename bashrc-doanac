@@ -5,7 +5,7 @@ HISTFILESIZE=4000
 alias storage="ssh -XC 192.168.0.120"
 alias reckless="ssh -A -XC reckless"
 
-EDITOR=vim
+export EDITOR=vim
 
 #aliases for using a single gvim instance
 function gvim-s ()
