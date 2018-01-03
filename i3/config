@@ -159,6 +159,8 @@ bindsym $mod+Shift+s exec --no-startup-id pavucontrol
 
 bindsym XF86Sleep exec /home/doanac/.config/i3/sleep.sh
 bindsym $mod+F10 exec /home/doanac/.config/i3/sleep.sh
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 
 # allow toggling displays via "f8" key
 #bindsym Control+F8 exec disper -C
