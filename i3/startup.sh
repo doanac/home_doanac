@@ -12,6 +12,7 @@ synclient TapButton3=2
 LAPTOP="eDP1"
 MONITOR="DP1"
 #MIRROR="2560x1440"
+#MIRROR="1920x1080"
 
 if [ -n "$MIRROR" ] ; then
 	# single monitor
