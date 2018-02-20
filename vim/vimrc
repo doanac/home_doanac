@@ -17,6 +17,8 @@ syntax on
 
 call pathogen#infect()
 
+set noerrorbells visualbell t_vb=
+
 "set default theme:
 if has("gui_running")
 	":color darkblue
@@ -24,8 +26,8 @@ if has("gui_running")
 	source $VIMRUNTIME/mswin.vim
 	:set guifont=Ubuntu\ Mono\ 12
 else
-	:set paste
-	:color koehler
+	set paste
+	color koehler
 endif
 
 source ~/.vim/osc52.vim
