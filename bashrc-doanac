@@ -7,6 +7,9 @@ alias reckless="ssh -A -XC reckless"
 
 export EDITOR=vim
 
+eval $(systemctl --user show-environment | grep SSH_AUTH_SOCK)
+export SSH_AUTH_SOCK
+
 #aliases for using a single gvim instance
 function gvim-s ()
 {

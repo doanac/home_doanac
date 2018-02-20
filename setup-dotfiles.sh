@@ -21,5 +21,10 @@ echo "Setting up i3"
 [ -d $HOME/.config/i3 ] && rm -rf $HOME/.config/i3
 ln -s $HERE/i3 $HOME/.config/i3
 
+[ -d $HOME/.config/systemd/user ] && rm -rf $HOME/.config/systemd/user
+mkdir -p $HOME/.config/systemd/user
+ln -s $HERE/ssh-agent.service $HOME/.config/systemd/user/
+systemctl --user enable ssh-agent.service
+
 echo "Setting up pass"
 git clone doanac@bettykrocks.com:/home/doanac/password-store $HOME/.password-store
