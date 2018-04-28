@@ -15,7 +15,7 @@ Host r2-a24
     ProxyCommand ssh aus-colo.linaro.org nc -q0 r2-a24 %p
     ForwardAgent yes
 
-Host raspberrypi3-64
+Host raspberrypi3-64-1 raspberrypi3-64-2
     User osf
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no

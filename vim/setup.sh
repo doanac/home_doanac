@@ -9,6 +9,7 @@ https://github.com/majutsushi/tagbar
 https://github.com/vim-airline/vim-airline
 https://github.com/tpope/vim-fugitive.git
 https://github.com/airblade/vim-gitgutter.git
+https://github.com/mattn/ssh-add-vim.git
 "
 
 echo "Setting up pathogen"

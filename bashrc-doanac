@@ -35,13 +35,24 @@ alias ssh-forget="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=n
 alias vi=vim
 
 # k8s stuff
+function first_pod ()
+{
+	kubectl --context $1 --namespace $2 get pods  | grep $3 | head -n1 | cut -d\  -f1
+}
 function jobserv-shell ()
 {
-	pod=$(kubectl --context $1 --namespace jobserv get pods  | grep jobserv | head -n1 | cut -d\  -f1)
+	pod=$(first_pod $1 jobserv jobserv)
 	echo == conecting to $pod ...
 	kubectl --context $1 --namespace jobserv exec -it $pod /bin/sh
 }
 alias jobserv-og="jobserv-shell osf-prod"
+
+function lmp-api-shell ()
+{
+	pod=$(first_pod osf-prod mgmt lmp-api)
+	echo == conecting to $pod ...
+	kubectl --context osf-prod --namespace mgmt exec -it $pod /bin/sh
+}
 
 function k8s-tail ()
 {
@@ -55,3 +66,5 @@ alias jobserv-tail-workermonitor='k8s-tail osf-prod jobserv worker'
 alias analyticz-tail='k8s-tail osf-prod data analyticz'
 
 alias jobserv-curl="curl -H \"OSF-TOKEN: $(cat $HOME/.osf-token)\" $*"
+
+alias zmp-shell="docker run --privileged -it --device=/dev/ttyACM0 -v /dev/bus/usb:/dev/bus/usb -e ZEPHYR_GCC_VARIANT=gccarmemb -e GCCARMEMB_TOOLCHAIN_PATH=/code/og/zmp-dev/build/other/zmp-prebuilt/arm-none-eabi-gcc/linux/ -v /code:/code hub.foundries.io/zmp-sdk /bin/bash"
