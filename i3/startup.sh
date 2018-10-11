@@ -37,6 +37,8 @@ else
 	fi
 fi
 
+xrandr --output DP1 --mode 2560x1440
+
 nm-applet &
 # enable volume buttons
 #xfce4-volumed
