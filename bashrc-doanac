@@ -45,26 +45,37 @@ function jobserv-shell ()
 	echo == conecting to $pod ...
 	kubectl --context $1 --namespace jobserv exec -it $pod /bin/sh
 }
-alias jobserv-og="jobserv-shell osf-prod"
+alias jobserv-og="jobserv-shell gke_osf-prod_us-central1-a_osf-prod"
 
 function lmp-api-shell ()
 {
-	pod=$(first_pod osf-prod mgmt lmp-api)
+	pod=$(first_pod gke_osf-prod_us-central1-a_osf-prod mgmt ota-api)
 	echo == conecting to $pod ...
-	kubectl --context osf-prod --namespace mgmt exec -it $pod /bin/sh
+	kubectl --context gke_osf-prod_us-central1-a_osf-prod --namespace mgmt exec -it $pod /bin/sh
 }
 
 function k8s-tail ()
 {
 	pod=$(kubectl --context $1 --namespace $2 get pods  | grep $3 | head -n1 | cut -d\  -f1)
 	echo == conecting to $pod ...
-	kubectl --context $1 --namespace $2 logs -f $pod
+	kubectl --context $1 --namespace $2 logs --tail 1000 -f $pod
 }
-alias jobserv-tail-gitpoller='k8s-tail osf-prod jobserv git-poller'
-alias jobserv-tail-lavareaper='k8s-tail osf-prod jobserv lava-reaper'
-alias jobserv-tail-workermonitor='k8s-tail osf-prod jobserv worker'
-alias analyticz-tail='k8s-tail osf-prod data analyticz'
+
+function k8s-shell ()
+{
+	pod=$(first_pod gke_osf-prod_us-central1-a_osf-prod $1 $2)
+	echo == conecting to $pod ...
+	kubectl --context gke_osf-prod_us-central1-a_osf-prod --namespace $1 exec -it $pod /bin/sh
+}
+
+alias jobserv-tail-gitpoller='k8s-tail gke_osf-prod_us-central1-a_osf-prod jobserv git-poller'
+alias jobserv-tail-lavareaper='k8s-tail gke_osf-prod_us-central1-a_osf-prod jobserv lava-reaper'
+alias jobserv-tail-workermonitor='k8s-tail gke_osf-prod_us-central1-a_osf-prod jobserv worker'
+alias analyticz-tail='k8s-tail gke_osf-prod_us-central1-a_osf-prod data analyticz'
 
 alias jobserv-curl="curl -H \"OSF-TOKEN: $(cat $HOME/.osf-token)\" $*"
 
-alias zmp-shell="docker run --privileged -it --device=/dev/ttyACM0 -v /dev/bus/usb:/dev/bus/usb -e ZEPHYR_GCC_VARIANT=gccarmemb -e GCCARMEMB_TOOLCHAIN_PATH=/code/og/zmp-dev/build/other/zmp-prebuilt/arm-none-eabi-gcc/linux/ -v /code:/code hub.foundries.io/zmp-sdk /bin/bash"
+function docker_clean_images(){
+	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
