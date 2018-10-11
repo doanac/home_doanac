@@ -15,10 +15,25 @@ Host r2-a24
     ProxyCommand ssh aus-colo.linaro.org nc -q0 r2-a24 %p
     ForwardAgent yes
 
-Host raspberrypi3-64-1 raspberrypi3-64-2
+Host raspberrypi0-wifi raspberrypi3-64-1 raspberrypi3-64-2 dragonboard-410c intel-corei7-64 intel-corei7-64-2 hikey minnowboard
     User osf
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
+
+Host synquacer
+    User linaro
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+
+Host armhf-worker
+    User ubuntu
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+
+Host mfi-pdu
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers aes128-cbc
+    User ubnt
 
 Host og-worker*.foundries.io
     User doanac
