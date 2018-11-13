@@ -75,6 +75,14 @@ alias analyticz-tail='k8s-tail gke_osf-prod_us-central1-a_osf-prod data analytic
 
 alias jobserv-curl="curl -H \"OSF-TOKEN: $(cat $HOME/.osf-token)\" $*"
 
+function jobserv-rerun(){
+	if [ $# -ne 3 ] ; then
+		echo "Usage: jobserv-rerun <project> <build> <run>"
+	else
+		jobserv-curl -X POST https://api.foundries.io/projects/$1/builds/$2/runs/$3/rerun
+	fi
+}
+
 function docker_clean_images(){
 	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
 	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
