@@ -22,9 +22,11 @@ set noerrorbells visualbell t_vb=
 "set default theme:
 if has("gui_running")
 	":color darkblue
-	:color evening-doanac
+	" :color evening-doanac
+	:color nord
 	source $VIMRUNTIME/mswin.vim
 	:set guifont=Ubuntu\ Mono\ 12
+	:set guioptions-=T  "remove toolbar
 else
 	set paste
 	color koehler
