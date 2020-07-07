@@ -1,9 +1,5 @@
 HashKnownHosts no
 
-Host reckless-remote
-    ProxyCommand ssh doanac.kicks-ass.net nc -q0 reckless %p
-    ForwardAgent yes
-
 Host *local
     User ubuntu
     StrictHostKeyChecking no
@@ -16,8 +12,8 @@ Host r1-a8
     ProxyCommand ssh aus-colo.linaro.org nc -q0 r1-a8 %p
     ForwardAgent yes
 
-Host raspberrypi0-wifi raspberrypi3-64-1 raspberrypi3-64-2 raspberrypi3-64-3 dragonboard-410c intel-corei7-64 intel-corei7-64-2 hikey minnowboard asus-lmp
-    User osf
+Host raspberrypi0-wifi raspberrypi3-64-1 raspberrypi3-64-2 raspberrypi3-64-3 dragonboard-410c intel-corei7-64 intel-corei7-64-2 hikey minnowboard asus-lmp raspberrypi4-64-1
+    User fio
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
 
@@ -36,5 +32,9 @@ Host mfi-pdu
     Ciphers aes128-cbc
     User ubnt
 
-Host og-worker*.foundries.io
+Host og-worker-*.foundries.io
     User doanac
+
+Host og-worker* og-partner-* !og-worker-04.foundries.io !og-worker-05.foundries.io !og-worker-06.foundries.io
+    ProxyCommand ssh og-jumphost.foundries.io nc -q0 %h %p
+    ForwardAgent yes
