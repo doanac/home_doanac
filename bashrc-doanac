@@ -4,6 +4,7 @@ HISTFILESIZE=4000
 
 alias storage="ssh -XC 192.168.0.120"
 alias reckless="ssh -A -XC reckless"
+alias og="ssh -A og"
 
 export EDITOR=vim
 
@@ -37,7 +38,7 @@ alias vi=vim
 # k8s stuff
 function first_pod ()
 {
-	kubectl --context $1 --namespace $2 get pods  | grep $3 | head -n1 | cut -d\  -f1
+	kubectl --context $1 --namespace $2 get pods  | grep Running | grep $3 | head -n1 | cut -d\  -f1
 }
 function jobserv-shell ()
 {
@@ -46,13 +47,6 @@ function jobserv-shell ()
 	kubectl --context $1 --namespace jobserv exec -it $pod /bin/sh
 }
 alias jobserv-og="jobserv-shell gke_osf-prod_us-central1-a_osf-prod"
-
-function lmp-api-shell ()
-{
-	pod=$(first_pod gke_osf-prod_us-central1-a_osf-prod mgmt ota-api)
-	echo == conecting to $pod ...
-	kubectl --context gke_osf-prod_us-central1-a_osf-prod --namespace mgmt exec -it $pod /bin/sh
-}
 
 function k8s-tail ()
 {
@@ -67,10 +61,14 @@ function k8s-shell ()
 	echo == conecting to $pod ...
 	kubectl --context gke_osf-prod_us-central1-a_osf-prod --namespace $1 exec -it $pod /bin/sh
 }
+alias ota-lite-og="k8s-shell ota-lite api"
 
+alias jobserv-tail-api='kubectl --namespace jobserv logs -f deployment/jobserv --all-containers=true'
 alias jobserv-tail-gitpoller='k8s-tail gke_osf-prod_us-central1-a_osf-prod jobserv git-poller'
-alias jobserv-tail-lavareaper='k8s-tail gke_osf-prod_us-central1-a_osf-prod jobserv lava-reaper'
 alias jobserv-tail-workermonitor='k8s-tail gke_osf-prod_us-central1-a_osf-prod jobserv worker'
+alias lite-tail-worker='k8s-tail gke_osf-prod_us-central1-a_osf-prod partner partner-worker'
+alias lite-tail-api='k8s-tail gke_osf-prod_us-central1-a_osf-prod ota-lite api'
+alias lite-tail-gateway='k8s-tail gke_osf-prod_us-central1-a_osf-prod ota-lite gateway'
 alias analyticz-tail='k8s-tail gke_osf-prod_us-central1-a_osf-prod data analyticz'
 
 alias jobserv-curl="curl -H \"OSF-TOKEN: $(cat $HOME/.osf-token)\" $*"
@@ -87,3 +85,24 @@ function docker_clean_images(){
 	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
 	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
 }
+
+function apc_reboot() {
+	if [ $# != 1 ] ; then
+		echo "Usage: api_reboot <port>"
+	else
+		curl "http://reckless:4321/power/control/reboot?hostname=apc-pdu&port=$1"
+	fi
+}
+
+alias pdu-reboot-rpi-1="apc_reboot 1"
+alias pdu-reboot-rpi3-2="apc_reboot 2"
+alias pdu-reboot-rpi3-3="apc_reboot 3"
+alias pdu-reboot-synquacer="apc_reboot 4"
+alias pdu-reboot-minnowboard="apc_reboot 5"
+alias pdu-reboot-dragonboard="apc_reboot 6"
+alias pdu-reboot-rpi4-1="apc_reboot 7"
+alias pdu-reboot-apm="apc_reboot 8"
+#alias pdu-reboot-rpi0="curl 'http://reckless:4321/power/control/reboot?hostname=ykush&port=3&delay=5'"
+#alias pdu-reboot-rpi3-1="curl 'http://reckless:4321/power/control/reboot?hostname=ykush&port=1&delay=5'"
+
+alias chromium="chromium --disable-gpu-driver-bug-workarounds"
