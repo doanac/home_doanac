@@ -7,6 +7,7 @@ set nocompatible
 filetype plugin on
 au FileType python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 nu!
 au FileType javascript setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 nu!
+au FileType marko setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 nu!
 au FileType html setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 au FileType gitcommit set tw=72 spell colorcolumn=72
 au BufNewFile,BufRead .stgit-edit.txt set tw=72 spell colorcolumn=72
@@ -62,6 +63,9 @@ map T :tabprevious <CR>
 vnoremap < <gv
 vnoremap > >gv
 
+" let ctrl-j move between windows
+noremap <C-J> <C-W>W
+
 " disable folds by default
 set nofoldenable
 
@@ -103,6 +107,9 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 let g:ale_open_list = 1
 call ale#Set('list_window_size', 4)
+
+" Have vim rooter set pwd to parent of current file
+let g:rooter_change_directory_for_non_project_files = 'current'
 
 "CScope mappings:
 if has("cscope")

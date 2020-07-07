@@ -10,6 +10,6 @@ cd $here/bundle
 for x in `ls` ; do
 	echo "Updating $x"
 	cd $x
-	git pull
+	git pull || true
 	cd ..
 done
