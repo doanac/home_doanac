@@ -10,8 +10,13 @@ au FileType javascript setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 n
 au FileType marko setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4 nu!
 au FileType html setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
 au FileType gitcommit set tw=72 spell colorcolumn=72
+au FileType rst set tw=72 spell colorcolumn=72
+au FileType md set tw=72 spell colorcolumn=72
 au BufNewFile,BufRead .stgit-edit.txt set tw=72 spell colorcolumn=72
 au BufNewFile,BufRead .stgit-new.txt set tw=72 spell colorcolumn=72
+
+" handy for editing text, re-wraps paragraphs
+" autocmd InsertLeave * normal gwap<CR>
 
 " for arch
 syntax on
