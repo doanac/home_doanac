@@ -69,6 +69,7 @@ alias jobserv-tail-workermonitor='k8s-tail gke_osf-prod_us-central1-a_osf-prod j
 alias lite-tail-worker='k8s-tail gke_osf-prod_us-central1-a_osf-prod partner partner-worker'
 alias lite-tail-api='k8s-tail gke_osf-prod_us-central1-a_osf-prod ota-lite api'
 alias lite-tail-gateway='k8s-tail gke_osf-prod_us-central1-a_osf-prod ota-lite gateway'
+alias lite-tail-dg='k8s-tail gke_osf-prod_us-central1-a_osf-prod ota-lite device-gateway'
 alias analyticz-tail='k8s-tail gke_osf-prod_us-central1-a_osf-prod data analyticz'
 
 alias jobserv-curl="curl -H \"OSF-TOKEN: $(cat $HOME/.osf-token)\" $*"
