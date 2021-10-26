@@ -21,6 +21,11 @@ au BufNewFile,BufRead .stgit-new.txt set tw=72 spell colorcolumn=72
 " for arch
 syntax on
 
+" get tmp files in one place
+set backupdir=~/.vimtmp//,.
+set undodir=~/.vimtmp//,.
+set directory=~/.vimtmp//,.
+
 call pathogen#infect()
 
 set noerrorbells visualbell t_vb=
