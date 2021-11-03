@@ -10,9 +10,11 @@ synclient TapButton2=3
 synclient TapButton3=2
 
 LAPTOP="eDP1"
-MONITOR="DP1"
+MONITOR="DP[0-9]\(-[0-9]\)\?"
 #MIRROR="2560x1440"
 #MIRROR="1920x1080"
+
+xrandr
 
 if [ -n "$MIRROR" ] ; then
 	# single monitor
@@ -24,7 +26,11 @@ else
 	if xrandr | grep "^$MONITOR con" >/dev/null ; then
 		# multi-monitor
 		echo "MULTI MONITOR FOUND"
-		xrandr --output $LAPTOP --output $MONITOR --right-of $LAPTOP
+		mon=$(xrandr | grep -o "^$MONITOR con" | sed 's/ con//')
+		echo "Using monitor: $mon"
+		xrandr --output $mon --mode 2560x1440
+
+		xrandr --output $LAPTOP --output $mon --right-of $LAPTOP
 		sleep 2s
 		i3-msg "workspace 1; append_layout $HERE/workspace-1left.json"
 		i3-msg "workspace 2; append_layout $HERE/workspace-1.json"
@@ -36,9 +42,6 @@ else
 		i3-msg "workspace 1; append_layout $HERE/workspace-1.json"
 	fi
 fi
-
-xrandr --output DP1 --mode 2560x1440
-
 nm-applet &
 # enable volume buttons
 #xfce4-volumed
