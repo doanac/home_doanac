@@ -2,6 +2,8 @@
 
 shopt -s nullglob globstar
 
+export GNUPGHOME=/home/doanac/.gnupg-local
+
 typeit=0
 if [[ $1 == "--type" ]]; then
 	typeit=1
