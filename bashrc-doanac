@@ -1,6 +1,6 @@
 # increase the defaults for history
-HISTSIZE=3000
-HISTFILESIZE=4000
+export HISTSIZE=3000
+export HISTFILESIZE=4000
 
 alias storage="ssh -XC 192.168.0.120"
 alias reckless="ssh -A -XC reckless"
@@ -44,7 +44,7 @@ function jobserv-shell ()
 {
 	pod=$(first_pod $1 jobserv jobserv)
 	echo == conecting to $pod ...
-	kubectl --context $1 --namespace jobserv exec -it $pod /bin/sh
+	kubectl --context $1 --namespace jobserv exec -it $pod -- /bin/sh
 }
 alias jobserv-og="jobserv-shell gke_osf-prod_us-central1-a_osf-prod"
 
@@ -59,7 +59,7 @@ function k8s-shell ()
 {
 	pod=$(first_pod gke_osf-prod_us-central1-a_osf-prod $1 $2)
 	echo == conecting to $pod ...
-	kubectl --context gke_osf-prod_us-central1-a_osf-prod --namespace $1 exec -it $pod /bin/sh
+	kubectl --context gke_osf-prod_us-central1-a_osf-prod --namespace $1 exec -it $pod -- /bin/sh
 }
 alias ota-lite-og="k8s-shell ota-lite api"
 
@@ -82,10 +82,13 @@ function jobserv-rerun(){
 	fi
 }
 
-function docker_clean_images(){
-	docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
-	docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
-}
+alias kubectl-esh='kubectl --namespace esh'
+alias kubectl-jobserv='kubectl --namespace jobserv'
+alias kubectl-ota-lite='kubectl --namespace ota-lite'
+alias kubectl-partner='kubectl --namespace partner'
+alias kubectl-stag-ota-lite='kubectl --namespace stag-ota-lite'
+alias kubectl-stag2-ota-lite='kubectl --namespace stag2-ota-lite'
+alias kubectl-subscriber-registry='kubectl --namespace subscriber-registry'
 
 function apc_reboot() {
 	if [ $# != 1 ] ; then
@@ -107,3 +110,4 @@ alias pdu-reboot-apm="apc_reboot 8"
 #alias pdu-reboot-rpi3-1="curl 'http://reckless:4321/power/control/reboot?hostname=ykush&port=1&delay=5'"
 
 alias chromium="chromium --disable-gpu-driver-bug-workarounds"
+alias pass="GNUPGHOME=/home/doanac/.gnupg-local pass"
