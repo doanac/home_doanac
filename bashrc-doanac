@@ -2,9 +2,10 @@
 export HISTSIZE=3000
 export HISTFILESIZE=4000
 
-alias storage="ssh -XC 192.168.0.120"
 alias reckless="ssh -A -XC reckless"
 alias og="ssh -A og"
+alias fioctl-meds="fioctl -c /home/doanac/code/meds-fioed/creds/fioctl.yaml"
+alias git-meds="FIOCTL_CONFIG=/home/doanac/code/meds-fioed/creds/fioctl.yaml git"
 
 export EDITOR=vim
 
@@ -32,6 +33,7 @@ function vim-s ()
 }
 
 alias ssh-forget="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias scp-forget="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 alias vi=vim
 
