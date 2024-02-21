@@ -1,43 +1,22 @@
 HashKnownHosts no
 
 Host og-remote
-    HostName doanac.dynu.net
+    Port 2201
+    HostName doanac.asuscomm.com
 
-Host minnowboard apalis-imx6-1 apalis-imx6-2 rpi4-1
+Host minnowboard apalis-imx6-1 apalis-imx6-2 rpi4-1 imx8mm
     User fio
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
-
-Host synquacer
-    User linaro
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
-
-Host armhf-worker
-    User ubuntu
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
-
-Host mfi-pdu
-    KexAlgorithms +diffie-hellman-group1-sha1
-    Ciphers aes128-cbc
-    User ubnt
-
-Host og-worker-*.foundries.io
-    User doanac
-
-Host og-intel-* og-worker* og-partner-* !og-worker-04* !og-worker-05* !og-worker-06* !og-worker-07* !og-worker-08* !og-worker-09* og-worker-10*
-    ProxyCommand ssh og-jumphost.foundries.io nc -q0 %h %p
-    ForwardAgent yes
 
 Host r1-lon.infra.foundries.io
     ProxyCommand ssh og-jumphost.foundries.io nc -q0 %h %p
     ForwardAgent yes
 
-Host og-worker-05.infra.foundries.io og-worker-06.infra.foundries.io og-worker-07.infra.foundries.io og-worker-08.infra.foundries.io og-worker-09.infra.foundries.io og-worker-10.infra.foundries.io
-    ProxyCommand ssh og-aws.infra.foundries.io nc -q0 %h %p
+Host og-worker-*.us-east-2.infra.foundries.io
+    ProxyCommand ssh og-aws.us-east-2.infra.foundries.io nc -q0 %h %p
     ForwardAgent yes
 
-Host aws-worker-* partner-cgx-*
+Host aws-worker-* aws-partner-* partner-*
     ProxyCommand ssh og-aws.infra.foundries.io nc -q0 %h %p
     ForwardAgent yes
